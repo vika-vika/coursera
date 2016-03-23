@@ -36,6 +36,7 @@
 <template name="webpage_layout">
 	<div class="container top-margin">
 		{{> website_post}}
+		{{> webpage_comments}}
 	</div>
 </template>
 
@@ -108,23 +109,14 @@
 </template>
 
 <template name="website_post">
-	<div class="row">
-		<div class="col-sm-6">
-			<a href="{{url}}">{{title}}</a>
-			<p>
-				{{description}}
-			</p>
-			<p>
-				<b>Rating:</b> {{rating}}
-			</p>
-			<p>
-				<b>CreatedOn:</b> {{createdOn}}
-			</p>	
-			<a href="/page/{{_id}}" class="btn btn-default js-comment">
-				<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-			</a>
-		</div>	
-		<div class="col-sm-4">
-		</div>
-	</div>
+	<a href="{{url}}">{{title}}</a>
+	<p>
+		{{description}}
+	</p>
+	<p>
+		<b>Rating:</b> {{rating}}
+	</p>
+	<p>
+		<b>CreatedOn:</b> {{createdOn}}
+	</p>	
 </template>
