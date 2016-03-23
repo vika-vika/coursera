@@ -1,0 +1,130 @@
+<head>
+  <title>siteace</title>
+</head>
+
+<body>
+
+</body>
+
+<template name="ApplicationLayout">
+		{{> yield "top"}}
+		{{> yield "bottom"}}
+</template>
+
+<template name="navbar">
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">
+	        Site Ace
+	      </a>
+	    </div>
+		<p class="navbar-text navbar-right">
+          {{> loginButtons align="right"}}
+        </p>
+	  </div>
+	</nav>
+</template>
+
+<template name="main_layout">
+	<div class="container top-margin">
+		{{> website_form}}
+		{{> website_list}}
+	</div>
+</template>
+
+<template name="webpage_layout">
+	<div class="container top-margin">
+		{{> website_post}}
+	</div>
+</template>
+
+<template name="website_form">
+    {{#if currentUser}}
+	<a class="btn btn-default js-toggle-website-form" href="#">
+  		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	</a>
+	{{/if}}
+	<div id="website_form" class="hidden_div">
+		<form class="js-save-website-form">
+		  <div class="form-group">
+		    <label for="url">Site address</label>
+		    <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+		  </div>
+		  <div class="form-group">
+		    <label for="title">Title</label>
+		    <input type="text" class="form-control" id="title" placeholder="Mysite">
+		  </div>
+		    <div class="form-group">
+		    <label for="description">Description</label>
+		    <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+		  </div>
+
+		  <button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
+</template>
+
+<!-- template that displays several website items -->
+<template name="website_list">
+	<ol>
+	{{#each websites}}
+	{{>website_item}}
+	{{/each}}
+	</ol>
+</template>
+
+<!-- template that displays individual website entries -->
+<template name="website_item">
+<li>
+	<div class="row">
+		<div class="col-sm-6">
+			<a href="{{url}}">{{title}}</a>
+			<p>
+				{{description}}
+			</p>
+			<p>
+				<b>Rating:</b> {{rating}}
+			</p>
+			<p>
+				<b>CreatedOn:</b> {{createdOn}}
+			</p>	
+		</div>
+		
+		<div class="col-sm-4">
+			<a href="/page/{{_id}}" class="btn btn-default js-comment">
+				<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+			</a>
+			<a href="#" class="btn btn-default js-upvote">
+				<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+			</a>
+			<a href="#" class="btn btn-default js-downvote">
+				<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+			</a>
+		</div>
+		<!-- you will be putting your up and down vote buttons in here! -->
+	</div>
+</li>
+</template>
+
+<template name="website_post">
+	<div class="row">
+		<div class="col-sm-6">
+			<a href="{{url}}">{{title}}</a>
+			<p>
+				{{description}}
+			</p>
+			<p>
+				<b>Rating:</b> {{rating}}
+			</p>
+			<p>
+				<b>CreatedOn:</b> {{createdOn}}
+			</p>	
+			<a href="/page/{{_id}}" class="btn btn-default js-comment">
+				<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+			</a>
+		</div>	
+		<div class="col-sm-4">
+		</div>
+	</div>
+</template>

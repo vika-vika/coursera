@@ -1,0 +1,11 @@
+/* CSS declarations go here */
+.hidden_div{
+	display:none;
+}
+
+.top-margin{
+	margin-top:70px;
+} 
+.navbar {
+	padding: 0px 50px 0px 0px;
+}
