@@ -9,3 +9,14 @@
 .navbar {
 	padding: 0px 50px 0px 0px;
 }
+
+.comments-block {
+  border-style: solid;
+  border-width: 1px;
+  padding:5px;
+  margin:5px;
+  border-color:#cccccc;
+}
+.comments-date {
+	align: right;
+}

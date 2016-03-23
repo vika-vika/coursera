@@ -40,10 +40,30 @@
 </template>
 
 <template name ="comment_item">
- <div>
-  <p> {{comment}}
-  </p>
- </div>
+
+<div class="row">
+	<div class="col-sm-8">
+		<div class="comments-block">
+			<div class="row">
+				<div class="col-sm-8">
+					<p>
+						<b>{{name}} </b>
+					</p>
+				</div>
+				<div class="col-sm-4">
+				    <div class="comments-date">
+					<p>
+						Added: {{createdOn}}
+					</p>
+					</div>
+				</div>
+			</div>
+			<p> {{comment}}</p>
+		</div>
+	</div>
+	<div class="col-sm-4">
+	</div>
+</div>
 </template>
 
 
