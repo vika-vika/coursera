@@ -3,12 +3,13 @@
 		Comments:
 	</h3>
 	{{> comments_form}}
+	{{> comments_list}}
 </template>
 
 <template name = "comments_form">
 
 <div id="comments_form">
-	<form class="js-post_comment_form">
+	<form class="js-post-comment-form">
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="form-group">
@@ -23,12 +24,27 @@
 	<div class="row">
 		<div class="col-sm-8">
 			<div class="form-group">
-				<textarea rows="4" class="form-control"  placeholder="Enter your comment..."></textarea>
+				<textarea rows="4" class="form-control"  id="comment" placeholder="Enter your comment..."></textarea>
 			</div>
 		</div>
 		<div class="col-sm-4"></div>
 	</div>
 	</form>
 </div>
-
 </template>
+
+<template name ="comments_list">
+{{#each comments}}
+	{{>comment_item}}
+{{/each}}
+</template>
+
+<template name ="comment_item">
+ <div>
+  <p> {{comment}}
+  </p>
+ </div>
+</template>
+
+
+
