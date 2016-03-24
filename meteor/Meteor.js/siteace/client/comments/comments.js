@@ -10,6 +10,8 @@ Template.comments_form.events({
 				createdOn: date
     	    });
 			$('.js-post-comment-form').trigger("reset");
+			 Meteor.call('foo');
+			
 			return false;// stop the form submit from reloading the page
 
 		}

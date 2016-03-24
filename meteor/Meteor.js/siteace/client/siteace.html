@@ -19,9 +19,13 @@
 	        Site Ace
 	      </a>
 	    </div>
-		<p class="navbar-text navbar-right">
-          {{> loginButtons align="right"}}
-        </p>
+		 <ul class="navbar-text navbar-right list-inline">
+		   <li><input type="text" id="search" placeholder="Search.."></li>
+		   <li>  <a href="#" class="js-search">
+		   <span class="glyphicon glyphicon-search search" aria-hidden="true"></span>
+		   </a></li>
+           <li>{{> loginButtons align="right"}}</li>
+		</ul>
 	  </div>
 	</nav>
 </template>
@@ -73,6 +77,17 @@
 	{{>website_item}}
 	{{/each}}
 	</ol>
+</template>
+
+<template name="website_search">
+ <div class="container top-margin">
+ <h1> Search Results: </h1>
+	<ol>
+	{{#each websites}}
+	{{>website_item}}
+	{{/each}}
+	</ol>
+ </div>
 </template>
 
 <!-- template that displays individual website entries -->

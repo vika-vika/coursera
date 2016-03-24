@@ -40,6 +40,16 @@
 			return false;// prevent the button from reloading the page
 		}
 	})
+	
+	
+	Template.navbar.events({
+		"click .js-search":function(event) {
+			var search = $('#search').val();
+			window.location.href = "/search/"+search;
+			//var regex = new RegExp("/.*" + search + ".*/i");
+			//findOne({"username" : {$regex : ".*son.*"}});
+			console.log(Websites.findOne({"title" : {'$regex' : search, '$options' : 'i'}}));
+	}});
 
 	Template.website_form.events({
 		"click .js-toggle-website-form":function(event){

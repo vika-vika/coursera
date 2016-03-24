@@ -1,6 +1,12 @@
 
+	
 	// start up function that creates entries in the Websites databases.
   Meteor.startup(function () {
+	console.log(extractMeta('http://efounders.co'));
+	console.log(extractMeta('http://coursera.com'));
+	console.log(extractMeta('http://meteortips.com/first-meteor-tutorial/methods/'));
+	console.log(extractMeta('http://stackoverflow.com/questions/17899515/meteor-call-server-method-in-client-got-404-method-not-found-error'));
+	  
     // code to run on server at startup
     if (!Websites.findOne()){
     	console.log("No websites yet. Creating starter data.");
