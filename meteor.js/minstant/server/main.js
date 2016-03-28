@@ -13,3 +13,15 @@
       }
     } 
   });
+  
+  Accounts.onCreateUser(function(options, user) {
+    /*if (options.secretAttribute)
+        user.secretAttribute = options.secretAttribute;*/
+	 
+    if (options.profile) {
+        user.profile = options.profile;		
+		user.profile.avatar = options.profile.gender === 'f' ? "ava7.png" : "ava8.png";
+	}
+
+    return user;
+});
