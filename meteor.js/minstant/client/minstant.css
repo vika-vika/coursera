@@ -9,10 +9,14 @@
 	height:75px;
 }
 
+.top-margin{
+	margin-top:100px;
+} 
+
 @media (min-width: 768px){
   #left {
     position: absolute;
-    top: 0px;
+    top: 70px;
     bottom: 0;
     left: 0;
     width: 75%;
@@ -21,7 +25,7 @@
   
   #right {
     position: absolute;
-    top: 0;
+    top: 70px;
     bottom: 0;
     right: 0;
     overflow-y: scroll;

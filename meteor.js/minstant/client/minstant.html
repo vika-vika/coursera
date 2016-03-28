@@ -30,9 +30,15 @@
 </nav>
 </template>
 
-<!-- Top level template for the lobby page -->
-<template name="lobby_page">
-	{{> available_user_list}}
+<template name="chat_layout">
+<div class="container top-margin">
+	<div class="col-sm-8" id="left">
+	    {{> chat_page }}
+	</div>   
+	<div class="col-sm-4" id="right">
+		{{> available_user_list}}
+	</div>
+</div>
 </template>
 
 <!-- display a list of users -->
@@ -52,14 +58,14 @@
 			{{#if isMyUser _id}} 
 			<div class="bg-success">{{getUsername _id}} (YOU)
 				<br/>
-				<img src="/{{profile.avatar}}" class="avatar_img">			
+				<p class ="js-user-click"> <img src="/{{profile.avatar}}" class="avatar_img"> </p>	
 			</div>
 			{{else}}
-			<a href="/chat/{{_id}}">
+			<!--<a href="/chat/{{_id}}" >-->
 				{{getUsername _id}}
 				<br/>
-				<img src="/{{profile.avatar}}" class="avatar_img">
-			</a>
+				<p class ="js-user-click"> <img src="/{{profile.avatar}}" class="avatar_img"> </p>
+			<!--</a>-->
 			{{/if}}
 		</div>
 	</div>
