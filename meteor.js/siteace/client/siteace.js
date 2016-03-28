@@ -22,8 +22,7 @@
 			var website_id = this._id;
 			console.log("Up voting website with id "+website_id);
 			var _rating = Websites.findOne({_id:website_id}).rating + 1;
-			Websites.update({_id:website_id}, {$set: {rating:_rating}}); 
-
+			Meteor.call("setRating", {website_id:website_id, rating:_rating});
 			return false;// prevent the button from reloading the page
 		}, 
 		"click .js-downvote":function(event){
@@ -33,7 +32,7 @@
 			var website_id = this._id;
 			console.log("Down voting website with id "+website_id);
 			var _rating = Websites.findOne({_id:website_id}).rating - 1;
-			Websites.update({_id:website_id}, {$set: {rating:_rating}}); 
+			Meteor.call("setRating", {website_id:website_id, rating:_rating});
 
 			// put the code in here to remove a vote from a website!
 
@@ -46,9 +45,6 @@
 		"click .js-search":function(event) {
 			var search = $('#search').val();
 			window.location.href = "/search/"+search;
-			//var regex = new RegExp("/.*" + search + ".*/i");
-			//findOne({"username" : {$regex : ".*son.*"}});
-			console.log(Websites.findOne({"title" : {'$regex' : search, '$options' : 'i'}}));
 	}});
 
 	Template.website_form.events({
@@ -61,13 +57,24 @@
 			var url = event.target.url.value;
 			console.log("The url they entered is: "+url);
 			
-			Websites.insert({
-				title:event.target.title.value, 
-				url:event.target.url.value, 
-				description:event.target.description.value, 
-				rating: 0,
-				createdOn:new Date()
-    	    });
+			var url = event.target.url.value;
+			if (!url || 0 === url.length) {
+				alert("Please enter url");
+				return false;
+			}
+			
+			var title = event.target.title.value;
+			if (!title || 0 === title.length) {
+				alert("Please enter title");
+				return false;
+			}
+			
+		    var description = event.target.description.value;
+			if (!description || 0 === description.length) {
+				alert("Please enter description");
+				return false;
+			}
+			Meteor.call("addWebsite", {url:url, title:title, description:description});
 			$('.js-save-website-form').trigger("reset");
 			$("#website_form").hide();
 			return false;// stop the form submit from reloading the page

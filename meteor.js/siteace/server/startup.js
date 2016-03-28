@@ -1,13 +1,37 @@
 
 	
-	// start up function that creates entries in the Websites databases.
+
+  Meteor.methods({
+  addWebsite : function (website) {
+
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+	Websites.insert({
+			title:website.title, 
+			url:website.url, 
+			description:website.description, 
+			rating: 0,
+			createdOn:new Date()
+    });
+  },
+   addComment : function (comment) {
+	var date = new Date().toJSON().slice(0,19);
+
+	Comments.insert({
+		name:comment.name, 
+		comment:comment.comment, 
+		webpage_id: comment.page_id,
+		createdOn: date
+    });
+  },
+  setRating : function (data) {
+	  Websites.update({_id:data.website_id}, {$set: {rating:data.rating}}); 
+  }
+  
+  })
+  
   Meteor.startup(function () {
-	console.log(extractMeta('http://efounders.co'));
-	console.log(extractMeta('http://coursera.com'));
-	console.log(extractMeta('http://meteortips.com/first-meteor-tutorial/methods/'));
-	console.log(extractMeta('http://stackoverflow.com/questions/17899515/meteor-call-server-method-in-client-got-404-method-not-found-error'));
-	  
-    // code to run on server at startup
     if (!Websites.findOne()){
     	console.log("No websites yet. Creating starter data.");
     	  Websites.insert({

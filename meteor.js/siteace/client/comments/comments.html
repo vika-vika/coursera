@@ -11,17 +11,19 @@
 <div id="comments_form">
 	<form class="js-post-comment-form">
 	<div class="row">
+	   {{#unless username}}
 		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-group">		
 				<input type="text" class="form-control" id="name" placeholder="Name..">
 			</div>
 		</div>
+		{{/unless}}	
 		<div class="col-sm-4">
 			<button type="submit" class="btn btn-default">Add comment</button>
 		</div>
 	</div>		
 	
-	<div class="row">
+	<div class="row" style="{margin-top:10px}">
 		<div class="col-sm-8">
 			<div class="form-group">
 				<textarea rows="4" class="form-control"  id="comment" placeholder="Enter your comment..."></textarea>
