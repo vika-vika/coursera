@@ -3,8 +3,13 @@
 .user_avatar{
 	min-height:100px;
 	text-align: center;
-
 }
+
+.chat_img{
+	max-height:15px;
+	text-align: right;
+}
+
 .avatar_img{
 	height:75px;
 }
@@ -12,6 +17,9 @@
 .top-margin{
 	margin-top:100px;
 } 
+.own-message {
+	color:	#228B22;
+}
 
 @media (min-width: 768px){
   #left {

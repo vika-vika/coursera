@@ -21,9 +21,36 @@
     }
   })
 
+  Template.chat_message.helpers({
+	 isOwnMessage :  function() {
+		 return this.owner === Meteor.userId();
+	 },
+	 name: function() {
+		var profile =  Session.get(this.owner);
+		if (profile) {
+			return profile.username; 
+		} else 
+			return "anonymous"; 
+	 }, 
+	 avatar: function() {
+	 	var profile =  Session.get(this.owner);
+		if (profile) {
+			return profile.avatar; 
+		} else 
+			return "ava1.png"; 
+	 }
+  });
+  
   Template.available_user.events({
     'click .js-user-click': function(event){
+		if (!Meteor.userId()) {
+			alert("Please login first to start the chat");
+			return;
+		}
         var otherUserId = this._id;
+		Session.set(otherUserId, this.profile);
+		Session.set(Meteor.userId(), Meteor.user().profile);
+
 		// find a chat that has two users that match current user id
 		// and the requested user id
 		var filter = {$or:[
@@ -38,7 +65,7 @@
 			chatId = chat._id;
 		}
 		if (chatId){// looking good, save the id to the session
-		Session.set("chatId",chatId);
+		Session.set("chatId", chatId);
 		Session.set("otherUserId", otherUserId);
 		}
     }
@@ -46,10 +73,13 @@
 
   Template.chat_page.helpers({
     messages:function(){
+	  if (!Meteor.userId()) {
+		   Session.set("chatId", -1);
+		   Session.set("otherUserId", -1);
+	  }
       var chat = Chats.findOne({_id:Session.get("chatId")});
 	  if (chat) 
 		return chat.messages;
-	  else return;
     }, 
 	chat: function (){
 		 var chat = Chats.findOne({_id:Session.get("chatId")});
@@ -76,7 +106,7 @@
       // is a good idea to insert data straight from the form
       // (i.e. the user) into the database?? certainly not. 
       // push adds the message to the end of the array
-      msgs.push({text: event.target.chat.value});
+      msgs.push({text: event.target.chat.value, owner: Meteor.userId()});
       // reset the form
       event.target.chat.value = "";
       // put the messages array onto the chat object
@@ -86,4 +116,3 @@
     }
   }
  })
-

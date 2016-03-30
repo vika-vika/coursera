@@ -20,7 +20,7 @@
 	 
     if (options.profile) {
         user.profile = options.profile;		
-		user.profile.avatar = options.profile.gender === 'f' ? "ava7.png" : "ava8.png";
+		user.profile.avatar = options.profile.gender === 'f' ? "avaf.png" : "avam.png";
 	}
 
     return user;
