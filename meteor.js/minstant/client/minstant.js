@@ -1,5 +1,7 @@
 
-//Meteor.user().profile
+Meteor.subscribe("usersToChat");
+Meteor.subscribe("Chats");
+
   // helper functions 
   /// 
   Template.available_user_list.helpers({
@@ -30,7 +32,7 @@
 		if (profile) {
 			return profile.username; 
 		} else 
-			return "anonymous"; 
+			return "admin"; 
 	 }, 
 	 avatar: function() {
 	 	var profile =  Session.get(this.owner);
@@ -58,28 +60,33 @@
                 {user2Id:Meteor.userId(), user1Id:otherUserId}
                 ]};
 		var chat = Chats.findOne(filter);
+		var chatId;
+
 		if (!chat){// no chat matching the filter - need to insert a new one
-			chatId = Chats.insert({user1Id:Meteor.userId(), user2Id:otherUserId});
-		}
-		else {// there is a chat going already - use that. 
+			Meteor.call('addChat', {user1Id:Meteor.userId(), user2Id:otherUserId}, function(error, result) {
+				chatId = result;
+                Session.set("chatId", chatId);
+			    Session.set("otherUserId", otherUserId);				
+			});	
+		} else {// there is a chat going already - use that. 
 			chatId = chat._id;
-		}
-		if (chatId){// looking good, save the id to the session
-		Session.set("chatId", chatId);
-		Session.set("otherUserId", otherUserId);
+			Session.set("chatId", chatId);
+			Session.set("otherUserId", otherUserId);
 		}
     }
 });
 
   Template.chat_page.helpers({
-    messages:function(){
+    messages:function() {  
 	  if (!Meteor.userId()) {
 		   Session.set("chatId", -1);
 		   Session.set("otherUserId", -1);
 	  }
       var chat = Chats.findOne({_id:Session.get("chatId")});
-	  if (chat) 
-		return chat.messages;
+	  
+	  if (chat)  {
+		return chat.messages;	
+	  }
     }, 
 	chat: function (){
 		 var chat = Chats.findOne({_id:Session.get("chatId")});
@@ -112,7 +119,14 @@
       // put the messages array onto the chat object
       chat.messages = msgs;
       // update the chat object in the database.
-      Chats.update(chat._id, chat);
+	  Meteor.call('addMessage', {id:chat._id, chat:chat});
     }
   }
  })
+ 
+
+$('textarea').on({input: function(){
+    var totalHeight = $(this).prop('scrollHeight') - parseInt($(this).css('padding-top')) - parseInt($(this).css('padding-bottom'));
+    $(this).css({'height':totalHeight});
+}
+});

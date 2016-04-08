@@ -13,7 +13,7 @@
       }
     } 
   });
-  
+ 
   Accounts.onCreateUser(function(options, user) {
     /*if (options.secretAttribute)
         user.secretAttribute = options.secretAttribute;*/
@@ -25,3 +25,36 @@
 
     return user;
 });
+
+Meteor.methods({
+  addChat : function (chat) {
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+	}
+    var id = Chats.insert({user1Id:chat.user1Id, user2Id:chat.user2Id});
+    var chat = Chats.findOne({_id:id});
+    var msgs = [];
+    msgs.push({text: "Hi! Nice to see you in the chat! :)", owner: -1});
+    chat.messages = msgs;
+	Chats.update(id, chat)   
+	return id;
+  }, 
+  addMessage: function (chat) {
+	  if (! Meteor.userId()) {
+		throw new Meteor.Error("not-authorized");
+	  }
+	  Chats.update(chat.id, chat.chat)   
+  }
+})
+
+Meteor.publish("usersToChat", function(){
+  return Meteor.users.find();
+})
+
+Meteor.publish("Chats", function(){
+  var filter = {$or:[{user1Id:this.userId},{user2Id:this.userId}]}
+  return Chats.find(filter);
+})
+
+
+		
